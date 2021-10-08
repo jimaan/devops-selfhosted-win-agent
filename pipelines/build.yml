@@ -1,0 +1,39 @@
+# BuildAndPush
+# Build and Push a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+name: 'BuildAndPush'
+
+trigger: none ## Manual build only
+
+resources:
+- repo: self
+
+pool:
+  vmImage: windows-latest
+
+variables:
+- template: vars.yml  # Template reference
+
+stages:
+- stage: BuildAndPush
+  displayName: 'Build & Push image'
+  jobs:
+  - job: BuildAndPush
+    displayName: 'Build & Push'
+    steps:
+    - task: Docker@2
+      displayName: 'Login Docker Hub'
+      inputs:
+        containerRegistry: '$(containerRegistry)'
+        command: 'login'
+    - task: Docker@2
+      displayName: 'Build & Push image to Docker Hub'
+      inputs:
+        command: 'buildAndPush'
+        containerRegistry: '$(containerRegistry)'
+        repository: '$(imageName)'
+        dockerfile: '$(Build.SourcesDirectory)/agent/Dockerfile'
+        tags: |
+          $(tag)
+          latest

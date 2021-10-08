@@ -1,0 +1,18 @@
+# Test
+
+name: 'Test'
+
+trigger: none ## Manual build only
+
+resources:
+- repo: self
+
+pool:
+  name: Default
+  demands: agent.os -equals Windows_NT
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'

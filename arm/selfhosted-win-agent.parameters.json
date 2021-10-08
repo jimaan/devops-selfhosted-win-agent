@@ -1,0 +1,59 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": null
+        },
+        "containerName": {
+            "value": "devops-selfhosted-win-agent"
+        },
+        "imageType": {
+            "value": "Public"
+        },
+        "imageName": {
+            "value": null
+        },
+        "osType": {
+            "value": "Windows"
+        },
+        "numberCpuCores": {
+            "value": "2"
+        },
+        "memory": {
+            "value": "2.5"
+        },
+        "restartPolicy": {
+            "value": "Always"
+        },
+        "environmentVariable0": {
+            "value": null
+        },
+        "environmentVariable1": {
+            "value": null
+        },
+        "commandOverrideArray": {
+            "value": [
+                "powershell.exe",
+                "-executionpolicy",
+                "unrestricted",
+                ".\\start.ps1",
+                "--once"
+            ]
+        },
+        "ipAddressType": {
+            "value": "Public"
+        },
+        "ports": {
+            "value": [
+                {
+                    "port": "80",
+                    "protocol": "TCP"
+                }
+            ]
+        },
+        "dnsNameLabel": {
+            "value": "devops-selfhosted-win-agent"
+        }
+    }
+}

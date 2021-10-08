@@ -1,0 +1,41 @@
+# Deploy
+# Deploy a Docker image to Azure Container instances using an ARM Template
+
+name: 'Deploy'
+
+trigger: none ## Manual build only
+
+resources:
+- repo: self
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+- template: vars.yml  # Template reference
+
+stages:
+- stage: Deploy
+  displayName: 'Deploy image'
+  jobs:
+  - job: Deploy
+    displayName: 'Deploy'
+    steps:
+    - task: AzureResourceManagerTemplateDeployment@3
+      displayName: 'Deploy Container instance'
+      inputs:
+        deploymentScope: 'Resource Group'
+        azureResourceManagerConnection: '$(azureResourceManagerConnection)'
+        subscriptionId: '$(subscriptionId)'
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: '$(resourceGroupName)'
+        location: '$(location)'
+        templateLocation: 'URL of the file'
+        csmFileLink: '$(csmDeployFileLink)'
+        csmParametersFileLink: '$(csmDeployParametersFileLink)'
+        overrideParameters: >-
+          -environmentVariable0 "$(devopsOrgUri)"
+          -environmentVariable1 "$(AZP_TOKEN)"
+          -location "$(location)"
+          -imageName "$(imageName)"
+        deploymentMode: 'Complete'

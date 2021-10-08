@@ -1,0 +1,17 @@
+# Vars
+variables:
+  devopsOrgUri: 'https://dev.azure.com/jimmyaanraad'
+
+  tag: '$(Build.BuildId)'
+  imageName: 'fxrudmsz1/devops-selfhosted-win-agent'
+  containerRegistry: 'dockerHub'
+  
+  azureResourceManagerConnection: 'az_devops-selfhosted-win-agent'
+  resourceGroupName: 'rg_devops-selfhosted-win-agent'
+  location: 'West Europe'
+
+  csmDeployFileLink: 'https://raw.githubusercontent.com/jimaan/devops-selfhosted-win-agent/main/arm/selfhosted-win-agent.json'
+  csmDeployParametersFileLink: 'https://raw.githubusercontent.com/jimaan/devops-selfhosted-win-agent/main/arm/selfhosted-win-agent.parameters.json'
+  
+  csmDestroyFileLink: 'https://raw.githubusercontent.com/jimaan/devops-selfhosted-win-agent/main/arm/destroy-all-resources.json'
+  

@@ -1,0 +1,36 @@
+# Destroy
+# Destroy a Azure Container instance using an ARM Template
+#https://www.codeisahighway.com/effective-ways-to-delete-resources-in-a-resource-group-on-azure-in-2021/
+
+name: Destroy
+
+trigger: none ## Manual build only
+
+resources:
+- repo: self
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+- template: vars.yml  # Template reference
+  
+stages:
+- stage: Destroy
+  displayName: 'Destroy Container instance'
+  jobs:
+  - job: Destroy
+    displayName: 'Destroy'
+    steps:
+    - task: AzureResourceManagerTemplateDeployment@3
+      displayName: 'Destroy Container instance'
+      inputs:
+        deploymentScope: 'Resource Group'
+        azureResourceManagerConnection: '$(azureResourceManagerConnection)'
+        subscriptionId: '$(subscriptionId)'
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: '$(resourceGroupName)'
+        location: '$(location)'
+        templateLocation: 'URL of the file'
+        csmFileLink: '$(csmDestroyFileLink)'
+        deploymentMode: 'Complete'
